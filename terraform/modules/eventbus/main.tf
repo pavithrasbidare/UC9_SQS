@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2"  # Specify your desired region
+  region = "us-east-1"  # Specify your desired region
 }
 
 resource "aws_cloudwatch_event_bus" "example" {
@@ -15,31 +15,27 @@ resource "aws_sqs_queue" "silver_sqs" {
 }
 
 resource "aws_cloudwatch_event_rule" "gold_rule" {
-  name        = "gold-rule"
+  name           = "gold-rule"
   event_bus_name = aws_cloudwatch_event_bus.example.name
-  event_pattern = jsonencode({
-    "source": ["gold-source"]
+  event_pattern  = jsonencode({
+    "source": ["insert_data_lambda"],
+    "detail-type": ["client-details"],
+    "detail": {
+      "client-type": ["gold"]
+    }
   })
 }
 
 resource "aws_cloudwatch_event_rule" "silver_rule" {
-  name        = "silver-rule"
+  name           = "silver-rule"
   event_bus_name = aws_cloudwatch_event_bus.example.name
-  event_pattern = jsonencode({
-    "source": ["silver-source"]
+  event_pattern  = jsonencode({
+    "source": ["insert_data_lambdat"],
+    "detail-type": ["client-type"],
+    "detail": {
+      "client": ["silver"]
+    }
   })
-}
-
-resource "aws_cloudwatch_event_target" "gold_target" {
-  rule      = aws_cloudwatch_event_rule.gold_rule.name
-  target_id = "gold-sqs-target"
-  arn       = aws_sqs_queue.gold_sqs.arn
-}
-
-resource "aws_cloudwatch_event_target" "silver_target" {
-  rule      = aws_cloudwatch_event_rule.silver_rule.name
-  target_id = "silver-sqs-target"
-  arn       = aws_sqs_queue.silver_sqs.arn
 }
 
 output "gold_sqs_url" {
@@ -53,6 +49,7 @@ output "silver_sqs_url" {
 output "event_bus_arn" {
   value = aws_cloudwatch_event_bus.example.arn
 }
+
 output "event_bus_name" {
   value = aws_cloudwatch_event_bus.example.name
 }
