@@ -1,8 +1,8 @@
 module "eventbridge" {
-  source  = "terraform-aws-modules/eventbridge/aws"
-  version = "3.14.3"  # Ensure you're using the correct version of the module
+  source    = "terraform-aws-modules/eventbridge/aws"
+  version   = "3.14.3"  # Ensure you're using the correct version of the module
 
-  name = "my-event-bus1"  # Name of your EventBridge event bus
+  event_bus_name = "my-event-bus1"  # Correct argument name for EventBus
 }
 
 output "event_bus_name" {
