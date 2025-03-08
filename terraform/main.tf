@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      # version is removed to allow using the latest version compatible with Terraform
+      source  = "hashicorp/aws"
+      version = "~> 4.0"  # Specify the version
     }
   }
 }
@@ -11,7 +11,7 @@ provider "aws" {
   region = "us-east-1"  # Your AWS region
 }
 
-# SQS Queue Resources (define these directly in the root module)
+# SQS Queue Resources
 resource "aws_sqs_queue" "sqs_gold1" {
   name = "sqs-gold1"
 }
@@ -31,11 +31,11 @@ resource "aws_sqs_queue" "sqs_silver_dlq" {
 # EventBridge Configuration
 module "eventbridge" {
   source  = "terraform-aws-modules/eventbridge/aws"
-  
+  version = "3.14.3"  # Ensure you're using the correct version of the module
+
   bus_name = "my-event-bus1"  # EventBus name
 
   rules = {
-    # Define your rules for eventbridge
     gold_clients_rule = {
       description   = "Capture all gold clients"
       event_pattern = jsonencode({
