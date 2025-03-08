@@ -1,5 +1,5 @@
 resource "aws_events_event_bus" "event_bus" {
-  name = var.event_bus  # Using the passed variable
+  name = "my-event-bus1"
 }
 
 output "event_bus_name" {
