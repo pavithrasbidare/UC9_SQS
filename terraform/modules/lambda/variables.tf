@@ -7,3 +7,7 @@ variable "event_bus" {
   description = "Event Bus name for Lambda to push events"
   type        = string
 }
+variable "function_name" {
+  description = "The name of the Lambda function"
+  type        = string
+}
