@@ -82,7 +82,7 @@ module "eventbridge" {
 module "lambda" {
   source      = "./modules/lambda"
   lambda_name = "lambda-client1"
-  event_bus   = module.eventbridge.bus_name  # Pass the EventBus name
+  event_bus   = module.eventbridge.event_bus_name  # Corrected to use event_bus_name output from EventBridge module
 }
 
 # API Gateway Configuration
@@ -90,4 +90,16 @@ module "api_gateway" {
   source           = "./modules/api_gateway"
   lambda_arn       = module.lambda.lambda_arn  # Ensure this ARN is correctly passed
   api_gateway_name = "client-api"
+}
+
+output "lambda_arn" {
+  value = module.lambda.lambda_arn
+}
+
+output "gold_queue_url" {
+  value = aws_sqs_queue.sqs_gold1.id  # Output the SQS queue URL directly
+}
+
+output "silver_queue_url" {
+  value = aws_sqs_queue.sqs_silver1.id  # Output the SQS queue URL directly
 }
