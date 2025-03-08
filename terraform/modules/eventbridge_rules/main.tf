@@ -2,10 +2,9 @@ module "eventbridge_rules" {
   source  = "terraform-aws-modules/eventbridge/aws"
   version = "3.14.3"
 
-  event_bus_name = module.eventbridge.event_bus_name
+  bus_name = module.eventbridge.bus_name  # Use bus_name to refer to the EventBridge bus
 
   rules = [
-    # Gold clients rule
     {
       name = "gold-clients-rule"
       event_pattern = jsonencode({
@@ -22,8 +21,6 @@ module "eventbridge_rules" {
         }
       ]
     },
-    
-    # Silver clients rule
     {
       name = "silver-clients-rule"
       event_pattern = jsonencode({
