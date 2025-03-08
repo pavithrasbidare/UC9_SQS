@@ -20,7 +20,7 @@ module "eventbridge" {
 # EventBridge Rules Configuration
 module "eventbridge_rules" {
   source    = "./modules/eventbridge_rules"
-  bus_name  = module.eventbridge.bus_name  # Corrected to use bus_name
+  event_bus = module.eventbridge.bus_name  # Use event_bus to match the expected argument name
 }
 
 # SQS Configuration
@@ -34,7 +34,7 @@ module "sqs" {
 module "lambda" {
   source      = "./modules/lambda"
   lambda_name = "lambda-client1"
-  bus_name    = module.eventbridge.bus_name  # Corrected to use bus_name
+  event_bus   = module.eventbridge.bus_name  # Pass event_bus here as well
 }
 
 # API Gateway Configuration
