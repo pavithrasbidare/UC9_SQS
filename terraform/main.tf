@@ -11,11 +11,28 @@ provider "aws" {
   region = "us-east-1"  # Your AWS region
 }
 
+# SQS Queue Resources (define these directly in the root module)
+resource "aws_sqs_queue" "sqs_gold1" {
+  name = "sqs-gold1"
+}
+
+resource "aws_sqs_queue" "sqs_gold_dlq" {
+  name = "sqs-gold-dlq"
+}
+
+resource "aws_sqs_queue" "sqs_silver1" {
+  name = "sqs-silver1"
+}
+
+resource "aws_sqs_queue" "sqs_silver_dlq" {
+  name = "sqs-silver-dlq"
+}
+
 # EventBridge Configuration
 module "eventbridge" {
   source  = "terraform-aws-modules/eventbridge/aws"
   
-  bus_name = "my-event-bus1"  # This is the correct argument name for the event bus
+  bus_name = "my-event-bus1"  # EventBus name
 
   rules = {
     # Define your rules for eventbridge
@@ -40,7 +57,6 @@ module "eventbridge" {
   }
 
   targets = {
-    # Define the targets for each rule
     gold_clients_rule = [
       {
         name            = "send-gold-clients-to-sqs"
@@ -60,13 +76,6 @@ module "eventbridge" {
   tags = {
     Name = "my-event-bus1"
   }
-}
-
-# SQS Configuration
-module "sqs" {
-  source      = "./modules/sqs"
-  sqs_queue_1 = "sqs-gold1"
-  sqs_queue_2 = "sqs-silver1"
 }
 
 # Lambda Configuration
