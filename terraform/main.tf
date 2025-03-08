@@ -26,5 +26,6 @@ module "eventbridge" {
 
 module "eventbridge_rules" {
   source        = "./modules/eventbridge_rules"
-  event_bus     = module.eventbridge.event_bus_name
+  event_bus     = module.eventbridge.event_bus_name  # This is the fix!
 }
+
