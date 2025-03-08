@@ -1,7 +1,16 @@
-provider "aws" {
-  region = "us-east-1"  # Change to your preferred region
-  version = "~> 4.0"    # Specify the latest version of the AWS provider
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 4.0"  # Define the version here
+    }
+  }
 }
+
+provider "aws" {
+  region = "us-east-1"  # Replace with your region
+}
+
 
 module "eventbridge" {
   source    = "./modules/eventbridge"
