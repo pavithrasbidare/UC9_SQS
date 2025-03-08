@@ -14,13 +14,13 @@ provider "aws" {
 # EventBridge Configuration
 module "eventbridge" {
   source    = "./modules/eventbridge"
-  name      = "my-event-bus1"
+  bus_name  = "my-event-bus1"  # Use bus_name for consistency
 }
 
 # EventBridge Rules Configuration
 module "eventbridge_rules" {
   source    = "./modules/eventbridge_rules"
-  event_bus = module.eventbridge.event_bus_name  # Pass the event bus name from the eventbridge module
+  bus_name  = module.eventbridge.bus_name  # Corrected to use bus_name
 }
 
 # SQS Configuration
@@ -34,12 +34,12 @@ module "sqs" {
 module "lambda" {
   source      = "./modules/lambda"
   lambda_name = "lambda-client1"
-  event_bus   = module.eventbridge.event_bus_name  # Pass the EventBus name
+  bus_name    = module.eventbridge.bus_name  # Corrected to use bus_name
 }
 
 # API Gateway Configuration
 module "api_gateway" {
-  source          = "./modules/api_gateway"
-  lambda_arn      = module.lambda.lambda_arn  # Ensure this ARN is correctly passed
+  source           = "./modules/api_gateway"
+  lambda_arn       = module.lambda.lambda_arn  # Ensure this ARN is correctly passed
   api_gateway_name = "client-api"
 }
