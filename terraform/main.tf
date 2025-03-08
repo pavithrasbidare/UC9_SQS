@@ -62,12 +62,6 @@ module "eventbridge" {
   }
 }
 
-# EventBridge Rules Configuration
-module "eventbridge_rules" {
-  source    = "./modules/eventbridge_rules"
-  event_bus = module.eventbridge.bus_name  # Pass the event bus name from the eventbridge module
-}
-
 # SQS Configuration
 module "sqs" {
   source      = "./modules/sqs"
