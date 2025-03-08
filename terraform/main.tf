@@ -22,10 +22,12 @@ module "sqs" {
 
 module "eventbridge" {
   source = "./modules/eventbridge"
+  event_bus = "my-event-bus1"  # Pass the event bus name here
 }
 
 module "eventbridge_rules" {
-  source        = "./modules/eventbridge_rules"
-  event_bus     = module.eventbridge.event_bus_name  # This is the fix!
+  source    = "./modules/eventbridge_rules"
+  event_bus = module.eventbridge.event_bus_name  # Use the output from the eventbridge module
 }
+
 
