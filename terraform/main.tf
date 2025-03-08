@@ -82,7 +82,7 @@ module "eventbridge" {
 module "lambda" {
   source      = "./modules/lambda"
   lambda_name = "lambda-client1"
-  event_bus   = module.eventbridge.event_bus_name  # Correct reference to EventBridge output
+  event_bus   = module.eventbridge.event_bus_arn  # Correct reference to EventBridge output (event_bus_arn)
 }
 
 # API Gateway Configuration
