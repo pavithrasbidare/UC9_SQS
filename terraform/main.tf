@@ -12,7 +12,7 @@ module "api_gateway" {
   source           = "./modules/api_gateway"
   lambda_arn       = module.lambda.lambda_arn
   api_gateway_name = "my-api-gateway"
-  region           = "us-west-2"
+  region           = "us-east-1"
 }
 
 module "eventbus" {
