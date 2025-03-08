@@ -3,9 +3,9 @@ provider "aws" {
 }
 
 module "lambda" {
-  source      = "./modules/lambda"
-  lambda_name = "my-lambda-function"
-  event_bus   = module.eventbus.event_bus_name
+  source        = "./modules/lambda"
+  function_name = "insert_data_lambda"
+  role_arn      = module.iam.lambda_role_arn
 }
 
 module "api_gateway" {
