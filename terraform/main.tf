@@ -1,5 +1,6 @@
 provider "aws" {
-  region = "us-east-1"  # Update to your region
+  region = "us-east-1"  # Change to your preferred region
+  version = "~> 4.0"    # Specify the latest version of the AWS provider
 }
 
 module "eventbridge" {
