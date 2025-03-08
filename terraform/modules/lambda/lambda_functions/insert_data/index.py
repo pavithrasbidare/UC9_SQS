@@ -6,7 +6,7 @@ import boto3
 eventbridge_client = boto3.client('events')
 
 # Event bus name (make sure it matches the one you created)
-eventbus_name = 'my-event-bus'
+eventbus_name = 'example-event-bus'
 
 def lambda_handler(event, context):
     try:
