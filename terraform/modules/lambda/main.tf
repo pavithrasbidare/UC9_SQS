@@ -1,7 +1,7 @@
 # Archive Lambda Code as ZIP
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "./path_to_your_lambda_code/lambda_function.py"  # Path to your Python Lambda code
+  source_file = "./lambda_file/lambda_function.py"  # Path to your Python Lambda code
   output_path = "${path.module}/lambda-code.zip"  # Output ZIP file to be used for Lambda function
 }
 
