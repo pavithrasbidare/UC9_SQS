@@ -12,10 +12,6 @@ resource "aws_lambda_function" "insert_data_lambda" {
   filename      = data.archive_file.insert_data_zip.output_path
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
 output "lambda_arn" {
   value = aws_lambda_function.insert_data_lambda.arn
 }
