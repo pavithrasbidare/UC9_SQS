@@ -7,7 +7,6 @@ module "lambda" {
   function_name = "insert_data_lambda"
   event_bus     = module.eventbus.event_bus_arn
   lambda_name   = "insert_data_lambda"
-  role_arn      = module.lambda.lambda_role_arn
 }
 
 module "api_gateway" {
