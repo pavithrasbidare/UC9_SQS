@@ -1,8 +1,8 @@
 # Archive Lambda Code as ZIP
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/lambda_functions"
-  output_path = "${path.module}/lambda_functions"
+  source_dir  = "${path.module}/lambda_file"
+  output_path = "${path.module}/lambda_file"
 }
 
 # IAM Role for Lambda Function
