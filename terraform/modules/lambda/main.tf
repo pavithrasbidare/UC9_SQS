@@ -1,8 +1,8 @@
 # Archive Lambda Code as ZIP
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "./lambda_file/lambda_function.py"  # Path to your Python Lambda code
-  output_path = "${path.module}/lambda-code.zip"  # Output ZIP file to be used for Lambda function
+  source_dir  = "${path.module}/lambda_functions"
+  output_path = "${path.module}/lambda_functions"
 }
 
 # IAM Role for Lambda Function
