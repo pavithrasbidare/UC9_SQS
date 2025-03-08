@@ -30,12 +30,12 @@ jobs:
 
       # Run Terraform plan
       - name: Terraform Plan
-        run: terraform plan -var-file=env/dev/dev.tfvars
+        run: terraform plan s
         working-directory: terraform  # Ensure Terraform runs from the correct directory
 
       # Apply Terraform to create resources (e.g., ECR repositories)
       - name: Terraform Apply
-        run: terraform apply -var-file=env/dev/dev.tfvars -auto-approve
+        run: terraform apply -auto-approve
         working-directory: terraform  # Ensure Terraform runs from the correct directory
 
   
