@@ -89,6 +89,7 @@ module "api_gateway" {
   source           = "./modules/api_gateway"
   lambda_arn       = module.lambda.lambda_arn  # Ensure this ARN is correctly passed
   api_gateway_name = "client-api"
+  region           = var.region  # Pass the region variable
 }
 
 output "lambda_arn" {
