@@ -4,69 +4,28 @@ data "archive_file" "insert_data_zip" {
   output_path = "${path.module}/lambda_functions/insert_data.zip"
 }
 
-# IAM Role for Lambda Function
-resource "aws_iam_role" "lambda_role" {
-  name               = "lambda-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action    = "sts:AssumeRole"
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-        Effect    = "Allow"
-        Sid       = ""
-      }
-    ]
-  })
-}
 
-# IAM Policy for Lambda Function
-resource "aws_iam_policy" "lambda_policy" {
-  name        = "lambda-policy"
-  description = "Allow Lambda to put events to EventBridge and send messages to SQS"
-  policy      = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action   = "events:PutEvents"
-        Resource = "*"
-        Effect   = "Allow"
-      },
-      {
-        Action   = "sqs:SendMessage"
-        Resource = "*"
-        Effect   = "Allow"
-      }
-    ]
-  })
-}
-
-# Attach IAM Policy to Lambda Role
-resource "aws_iam_role_policy_attachment" "lambda_role_policy_attachment" {
-  role       = aws_iam_role.lambda_role.name
-  policy_arn = aws_iam_policy.lambda_policy.arn
-}
-
-# Lambda Function Resource (using the ZIP file created above)
-resource "aws_lambda_function" "lambda_client" {
-  function_name = var.lambda_name
-  runtime       = "python3.9"
-  role          = aws_iam_role.lambda_role.arn
-  handler       = "lambda_function.lambda_handler"
-  filename      = data.archive_file.lambda_zip.output_path  # Use the generated ZIP file
-
-  environment {
-    variables = {
-      EVENT_BUS_NAME = var.event_bus
-    }
+resource "aws_lambda_function" "insert_data_lambda" {
+  function_name = var.function_name
+  role          = var.role_arn
+  handler       = "index.lambda_handler"
+  runtime       = "python3.8"
+  filename      = data.archive_file.insert_data_zip.output_path
   }
 
-  depends_on = [aws_iam_role.lambda_role]
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes = [
+      function_name,
+      role,
+      handler,
+      runtime,
+      filename,
+    ]
+  }
 }
 
-# Output Lambda ARN
-output "lambda_arn" {
-  value = aws_lambda_function.lambda_client.arn
+resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
+  role       = aws_iam_role.lambda_dynamodb_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
