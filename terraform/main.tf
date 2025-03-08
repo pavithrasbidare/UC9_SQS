@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"  # Your AWS region
+  region = var.region  # Use the region variable
 }
 
 # SQS Queue Resources
