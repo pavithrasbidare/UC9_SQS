@@ -4,8 +4,8 @@ module "eventbridge_rules" {
 
   event_bus_name = module.eventbridge.event_bus_name
 
-  # Gold clients rule
   rules = [
+    # Gold clients rule
     {
       name = "gold-clients-rule"
       event_pattern = jsonencode({
@@ -21,11 +21,9 @@ module "eventbridge_rules" {
           id  = "gold-clients-target"
         }
       ]
-    }
-  ]
-
-  # Silver clients rule
-  rules = [
+    },
+    
+    # Silver clients rule
     {
       name = "silver-clients-rule"
       event_pattern = jsonencode({
