@@ -30,7 +30,7 @@ jobs:
 
       # Run Terraform plan
       - name: Terraform Plan
-        run: terraform plan s
+        run: terraform plan
         working-directory: terraform  # Ensure Terraform runs from the correct directory
 
       # Apply Terraform to create resources (e.g., ECR repositories)
