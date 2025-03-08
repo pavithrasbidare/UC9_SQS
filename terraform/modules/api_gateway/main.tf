@@ -22,11 +22,13 @@ resource "aws_api_gateway_integration" "lambda_integration" {
   http_method = aws_api_gateway_method.post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.lambda_arn}/invocations"
+  uri                     = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_client.arn}/invocations"
 }
 
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.api.id
+
+  depends_on = [aws_api_gateway_integration.lambda_integration]
 }
 
 resource "aws_api_gateway_stage" "api_stage" {
@@ -34,7 +36,6 @@ resource "aws_api_gateway_stage" "api_stage" {
   stage_name    = "prod"
   rest_api_id   = aws_api_gateway_rest_api.api.id
 }
-
 
 output "api_url" {
   value = aws_api_gateway_deployment.api_deployment.invoke_url
