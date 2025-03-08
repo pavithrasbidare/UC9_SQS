@@ -7,6 +7,7 @@ module "lambda" {
   function_name = "insert_data_lambda"
   event_bus     = module.eventbus.event_bus_arn
   lambda_name   = "insert_data_lambda"
+  role_arn      = "arn:aws:iam::510278866235:role/lambda_exec_role"
 }
 
 module "api_gateway" {
