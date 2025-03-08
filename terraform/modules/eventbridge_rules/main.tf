@@ -16,7 +16,7 @@ module "eventbridge_rules" {
       })
       targets = [
         {
-          arn = "arn:aws:sqs:us-west-2:123456789012:sqs-gold1"
+          arn = aws_sqs_queue.sqs_gold1.arn  # Use the ARN from the main module
           id  = "gold-clients-target"
         }
       ]
@@ -32,7 +32,7 @@ module "eventbridge_rules" {
       })
       targets = [
         {
-          arn = "arn:aws:sqs:us-west-2:123456789012:sqs-silver1"
+          arn = aws_sqs_queue.sqs_silver1.arn  # Use the ARN from the main module
           id  = "silver-clients-target"
         }
       ]
