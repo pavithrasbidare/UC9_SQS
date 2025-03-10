@@ -2,6 +2,10 @@ name: Deploy Application
 
 on:
   workflow_dispatch:  # Allows manual trigger of the workflow
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
 
 jobs:
   # Job 1: Checkout Code
